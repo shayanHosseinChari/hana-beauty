@@ -18,7 +18,7 @@ const iransans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "لونِیا | زیبایی طبیعی",
+  title: "حنا بیوتی | مرجع تخصصی محصولات مراقبتی",
   description: "محصولات مراقبت از پوست و زیبایی با عصاره‌های گیاهی",
 };
 

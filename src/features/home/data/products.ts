@@ -19,7 +19,7 @@ export const products: Product[] = [
     tone: "from-[#EBD8C1] to-[#8b6e47]",
   },
   {
-    banner:"/pr3.png",
+    banner:"/pr4.png",
 
     title: "Botanical Cleansing Gel",
     subtitle: "ژل پاک‌کننده گیاهی",
