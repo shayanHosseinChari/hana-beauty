@@ -3,6 +3,7 @@ export interface Product {
   subtitle: string;
   price: string;
   tag: string;
+  banner:string;
   tone: string;
 }
 

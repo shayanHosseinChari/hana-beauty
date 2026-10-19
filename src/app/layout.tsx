@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
 const iransans = localFont({
   src: [
@@ -27,9 +29,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       dir="rtl"
       className={`${iransans.variable} h-full antialiased`}
     >
+      <Header />
       <body className="min-h-full flex flex-col font-sans">
         {children}
       </body>
+      <Footer />
     </html>
   );
 }

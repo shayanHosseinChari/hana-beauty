@@ -12,14 +12,12 @@ export default function HomePage() {
       dir="rtl"
       className="min-h-screen overflow-hidden bg-[#FDF7F5] text-[#241B1A] antialiased selection:bg-[#F2D6CD]"
     >
-      <Header />
       <HeroSection  />
       <ProductsSection />
       <RoutineSection />
       <IngredientsSection />
       <FaqSection />
-      <Footer />
-      <FloatingRoutineAction />
+      {/* <FloatingRoutineAction /> */}
     </main>
   );
 }
