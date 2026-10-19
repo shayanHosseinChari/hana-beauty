@@ -2,40 +2,30 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { RippleButton } from "@/components/ui/RippleButton";
 
 export function HeroSection() {
-  const [showFloatingActions, setShowFloatingActions] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const heroHeight = window.innerHeight * 0.9;
-      setShowFloatingActions(window.scrollY > 40 && window.scrollY < heroHeight);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <section className="relative isolate overflow-hidden">
       <HeroBackground />
       <FloatingPetals />
 
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 py-16 sm:px-8 lg:grid-cols-12 lg:py-28">
-        <div className="order-2 lg:order-1 lg:col-span-6">
-          <HeroContent />
+      <div className="mx-auto max-w-7xl px-5 pb-6 pt-16 sm:px-8 sm:pb-8 lg:pb-28 lg:pt-28">
+        <div className="grid items-center gap-14 lg:grid-cols-12">
+          <div className="order-2 lg:order-1 lg:col-span-6">
+            <HeroContent />
+          </div>
+          <div className="order-1 lg:order-2 lg:col-span-6">
+            <HeroVisual />
+          </div>
         </div>
-        <div className="order-1 lg:order-2 lg:col-span-6">
-          <HeroVisual />
-        </div>
+
+        <MobileActions />
       </div>
 
       <ScrollIndicator />
-      <MobileFloatingActions visible={showFloatingActions} />
     </section>
   );
 }
@@ -44,16 +34,8 @@ function HeroBackground() {
   return (
     <div className="absolute inset-0 -z-10">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_10%,rgba(217,130,124,.35),transparent_50%),radial-gradient(ellipse_at_10%_50%,rgba(166,124,82,.22),transparent_45%),linear-gradient(180deg,#FDF7F5_0%,#FFF_60%,#FDF7F5_100%)]" />
-      <motion.div
-        animate={{ x: [0, 40, 0], y: [0, -30, 0] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -top-32 right-1/4 h-[420px] w-[420px] rounded-full bg-[#D9827C]/20 blur-[120px]"
-      />
-      <motion.div
-        animate={{ x: [0, -30, 0], y: [0, 40, 0] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-0 left-1/4 h-[360px] w-[360px] rounded-full bg-[#A67C52]/15 blur-[110px]"
-      />
+      <div className="hero-glow-1 absolute -top-32 right-1/4 h-[420px] w-[420px] rounded-full bg-[#D9827C]/20 blur-[120px] will-change-transform" />
+      <div className="hero-glow-2 absolute bottom-0 left-1/4 h-[360px] w-[360px] rounded-full bg-[#A67C52]/15 blur-[110px] will-change-transform" />
     </div>
   );
 }
@@ -62,22 +44,10 @@ function FloatingPetals() {
   return (
     <div className="pointer-events-none absolute inset-0 -z-10">
       {[...Array(6)].map((_, i) => (
-        <motion.span
+        <span
           key={i}
-          className="absolute block h-3 w-5 rounded-full bg-gradient-to-br from-[#D9827C]/50 to-[#F2D6CD]/40"
+          className={`hero-petal hero-petal-${i} absolute block h-3 w-5 rounded-full bg-gradient-to-br from-[#D9827C]/50 to-[#F2D6CD]/40 will-change-transform`}
           style={{ top: `${15 + i * 12}%`, left: `${8 + i * 15}%` }}
-          animate={{
-            y: [0, -18, 0],
-            x: [0, 8, 0],
-            rotate: [18, 32, 18],
-            opacity: [0.4, 0.7, 0.4],
-          }}
-          transition={{
-            duration: 9 + i * 1.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 0.6,
-          }}
         />
       ))}
     </div>
@@ -212,7 +182,7 @@ function HeroVisual() {
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       className="relative"
     >
-      <div className="absolute -inset-8 -z-10 rounded-[3rem] bg-gradient-to-br from-[#F2D6CD]/50 via-transparent to-[#A67C52]/25 blur-3xl" />
+      <div className="absolute -inset-8 -z-10 rounded-[3rem] bg-gradient-to-br from-[#F2D6CD]/50 via-transparent to-[#A67C52]/25 blur-2xl" />
 
       <div className="absolute inset-0 -z-10 flex items-center justify-center">
         <div className="aspect-square w-[105%] rounded-full border border-dashed border-[#D9827C]/25" />
@@ -230,17 +200,9 @@ function HeroVisual() {
 
 function BlobImage() {
   return (
-    <motion.div
-      animate={{
-        borderRadius: [
-          "62% 38% 46% 54% / 60% 42% 58% 40%",
-          "44% 56% 62% 38% / 48% 60% 40% 52%",
-          "56% 44% 38% 62% / 52% 44% 56% 48%",
-          "62% 38% 46% 54% / 60% 42% 58% 40%",
-        ],
-      }}
-      transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+    <div
       className="relative aspect-square w-full overflow-hidden border-[6px] border-white shadow-[0_30px_80px_-20px_rgba(61,44,42,.35)]"
+      style={{ borderRadius: "62% 38% 46% 54% / 60% 42% 58% 40%" }}
     >
       <div className="pointer-events-none absolute inset-2 z-20 rounded-[inherit] border border-white/40" />
 
@@ -250,20 +212,16 @@ function BlobImage() {
         fill
         priority
         sizes="(max-width: 1024px) 90vw, 520px"
-        className="object-cover transition-transform duration-700 hover:scale-105"
+        className="object-cover"
       />
 
       <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#3D2C2A]/35 via-transparent to-transparent" />
 
-      <motion.div
-        animate={{ y: [0, -6, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/90 px-2.5 py-1 text-[10px] font-medium text-[#3D2C2A] shadow-md backdrop-blur-md sm:right-5 sm:top-5 sm:px-3 sm:py-1.5 sm:text-[11px]"
-      >
+      <div className="hero-float-y absolute right-4 top-4 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/90 px-2.5 py-1 text-[10px] font-medium text-[#3D2C2A] shadow-md backdrop-blur-md sm:right-5 sm:top-5 sm:px-3 sm:py-1.5 sm:text-[11px]">
         <span className="size-1.5 rounded-full bg-[#D9827C]" />
         اورجینال
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
 
@@ -344,69 +302,51 @@ function HydrationCard() {
       transition={{ delay: 1.1, duration: 0.6 }}
       className="absolute -right-1 top-1/3 z-20 hidden sm:block"
     >
-      <motion.div
-        animate={{ y: [0, -5, 0] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-        className="rounded-2xl border border-[#F0E1DC] bg-white/95 px-3.5 py-2.5 text-center shadow-lg backdrop-blur-md"
-      >
+      <div className="hero-float-y-slow rounded-2xl border border-[#F0E1DC] bg-white/95 px-3.5 py-2.5 text-center shadow-lg backdrop-blur-md">
         <div className="text-lg font-bold leading-none text-[#A67C52]">
           ۷۲h
         </div>
         <div className="mt-1 text-[10px] leading-none text-[#6B5350]">
           آبرسانی
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
 
-function MobileFloatingActions({ visible }: { visible: boolean }) {
+function MobileActions() {
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.35, ease: "easeOut" }}
-          className="fixed inset-x-0 bottom-4 z-40 flex items-center gap-2.5 px-5 sm:hidden"
-        >
-          <a
-            href="#shop"
-            className="group relative flex h-13 flex-1 items-center justify-center overflow-hidden rounded-full bg-[#3D2C2A] px-5 text-sm font-medium text-white shadow-[0_10px_30px_-8px_rgba(61,44,42,.5)] active:scale-[0.98]"
-            style={{ height: "52px" }}
-          >
-            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-            شروع خرید
-          </a>
-          <a
-            href="#routine"
-            className="flex flex-1 items-center justify-center rounded-full border border-[#D9827C]/30 bg-white/95 px-5 text-sm font-medium text-[#8C4A43] shadow-[0_10px_30px_-8px_rgba(217,130,124,.4)] backdrop-blur-md active:scale-[0.98]"
-            style={{ height: "52px" }}
-          >
-            روتین اختصاصی
-          </a>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.6 }}
+      className="mt-8 flex items-center gap-2.5 sm:hidden"
+    >
+      <a
+        href="#shop"
+        className="group relative flex flex-1 items-center justify-center overflow-hidden rounded-full bg-[#3D2C2A] px-5 text-sm font-medium text-white shadow-[0_10px_30px_-8px_rgba(61,44,42,.5)] active:scale-[0.98]"
+        style={{ height: "52px" }}
+      >
+        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+        شروع خرید
+      </a>
+      <a
+        href="#routine"
+        className="flex flex-1 items-center justify-center rounded-full border border-[#D9827C]/30 bg-white/95 px-5 text-sm font-medium text-[#8C4A43] shadow-[0_10px_30px_-8px_rgba(217,130,124,.4)] backdrop-blur-md active:scale-[0.98]"
+        style={{ height: "52px" }}
+      >
+        روتین اختصاصی
+      </a>
+    </motion.div>
   );
 }
 
 function ScrollIndicator() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1.4 }}
-      className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block"
-    >
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-[#A67C52]/40 p-1"
-      >
+    <div className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 lg:block">
+      <div className="hero-scroll-bounce flex h-10 w-6 items-start justify-center rounded-full border-2 border-[#A67C52]/40 p-1">
         <span className="h-2 w-1 rounded-full bg-[#A67C52]" />
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
