@@ -5,7 +5,7 @@ import "./globals.css";
 const iransans = localFont({
   src: [
     {
-      path: "./fonts/IranianSans.ttf",
+      path: "../../public/fonts/vazir.ttf",
       weight: "400",
       style: "normal",
     },
