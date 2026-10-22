@@ -5,6 +5,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { RippleButton } from "@/components/ui/RippleButton";
+import Link from "next/link";
 
 export function HeroSection() {
   return (
@@ -120,12 +121,12 @@ function HeroActions() {
       transition={{ duration: 0.7, delay: 0.55 }}
       className="mt-8 hidden flex-wrap items-center gap-4 sm:flex"
     >
-      <a href="#shop" className="group">
+      <Link href="/products" className="group">
         <span className="relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-[#3D2C2A] px-8 text-sm font-medium text-white shadow-lg shadow-[#3D2C2A]/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#3D2C2A]/30">
           <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
           شروع خرید
         </span>
-      </a>
+      </Link>
       <a href="#routine">
         <RippleButton variant="tonal" className="h-14 px-8">
           ساخت روتین اختصاصی
