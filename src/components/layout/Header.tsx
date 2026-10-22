@@ -66,7 +66,9 @@ function AccountActions({
     <div className="flex items-center gap-2.5" dir="rtl">
       <button
         type="button"
-        onClick={onAccountClick}
+        onClick={()=>{
+          navigation.navigate('/profile')
+        }}
         aria-label="حساب کاربری"
         title="حساب کاربری"
         className={ICON_BUTTON_CLASS}

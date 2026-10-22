@@ -54,7 +54,7 @@ export function ProductCard({
           {/* دکمه علاقه‌مندی */}
           <button
             type="button"
-            aria-label="افزودن به علاقه‌مندی‌ها"
+           
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
