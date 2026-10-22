@@ -99,7 +99,7 @@ export function Header({
   const [scrolled, setScrolled] = useState(false);
   const [cartCount] = useState(3); // بعداً به context/store وصل کن
   const [mobileOpen, setMobileOpen] = useState(false);
-
+  const navigation = useRouter()
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 12);
@@ -315,7 +315,10 @@ export function Header({
             ))}
 
             {/* دکمه‌های موبایل */}
-            <div className="mt-3 flex flex-col gap-3 border-t border-[#F0E1DC]/80 pt-4">
+            <div onClick={()=>{
+            
+          navigation.push('/profile')
+        }} className="mt-3 flex flex-col gap-3 border-t border-[#F0E1DC]/80 pt-4">
               <RippleButton
                 variant="outlined"
                 onClick={handleMobileAccountClick}
