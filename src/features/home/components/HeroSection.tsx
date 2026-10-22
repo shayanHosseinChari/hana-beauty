@@ -123,7 +123,7 @@ function HeroActions() {
     >
       <Link href="/products" className="group">
         <span className="relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-[#3D2C2A] px-8 text-sm font-medium text-white shadow-lg shadow-[#3D2C2A]/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#3D2C2A]/30">
-          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+          <span className="absolute inset-0 -translate-x-full bg-gradient-to-right from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
           شروع خرید
         </span>
       </Link>
@@ -323,14 +323,14 @@ function MobileActions() {
       transition={{ duration: 0.6, delay: 0.6 }}
       className="mt-8 flex items-center gap-2.5 sm:hidden"
     >
-      <a
-        href="#shop"
+      <Link
+        href="/products"
         className="group relative flex flex-1 items-center justify-center overflow-hidden rounded-full bg-[#3D2C2A] px-5 text-sm font-medium text-white shadow-[0_10px_30px_-8px_rgba(61,44,42,.5)] active:scale-[0.98]"
         style={{ height: "52px" }}
       >
-        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+        <span className="absolute inset-0 -translate-x-full bg-gradient-to-right from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
         شروع خرید
-      </a>
+      </Link>
       <a
         href="#routine"
         className="flex flex-1 items-center justify-center rounded-full border border-[#D9827C]/30 bg-white/95 px-5 text-sm font-medium text-[#8C4A43] shadow-[0_10px_30px_-8px_rgba(217,130,124,.4)] backdrop-blur-md active:scale-[0.98]"
