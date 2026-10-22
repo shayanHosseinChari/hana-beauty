@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { RippleButton } from "@/components/ui/RippleButton";
+import { useRouter } from "next/navigation";
 
 const NAV_ITEMS = [
   ["فروشگاه", "#shop"],
@@ -62,12 +63,13 @@ function AccountActions({
   onAccountClick,
   onFavoritesClick,
 }: HeaderProps) {
+  const navigation = useRouter()
   return (
     <div className="flex items-center gap-2.5" dir="rtl">
       <button
         type="button"
         onClick={()=>{
-          navigation.navigate('/profile')
+          navigation.push('/profile')
         }}
         aria-label="حساب کاربری"
         title="حساب کاربری"
