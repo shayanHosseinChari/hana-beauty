@@ -3,13 +3,14 @@
 
 import { useEffect, useState } from "react";
 import { RippleButton } from "@/components/ui/RippleButton";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CartDrawer } from "@/features/cart/components/CartDrawer";
+import Link from "next/link";
 
 const NAV_ITEMS = [
-  ["فروشگاه", "#shop"],
-  ["روتین هوشمند", "#routine"],
-  ["ترکیبات", "#science"],
+  ["فروشگاه", "/products"],
+  ["دسته بندی ها", "/categories"],
+  ["برند ها", "/brands"],
   ["سؤالات", "#faq"],
 ] as const;
 
@@ -102,6 +103,14 @@ export function Header({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const navigation = useRouter();
+  const pathname = usePathname();
+
+  // تشخیص فعال بودن مسیر
+  const isActive = (href: string) => {
+    if (href.startsWith("#")) return false; // لینک‌های hash فعال نمی‌شوند
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(href + "/");
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -179,25 +188,41 @@ export function Header({
             aria-label="ناوبری اصلی"
             className="hidden items-center gap-1 lg:flex"
           >
-            {NAV_ITEMS.map(([label, href]) => (
-              <a
-                key={href}
-                href={href}
-                className="group relative rounded-full px-4 py-2 text-sm font-medium text-[#6B5350] transition-colors duration-300 hover:text-[#3D2C2A]"
-              >
-                <span className="relative z-10">{label}</span>
+            {NAV_ITEMS.map(([label, href]) => {
+              const active = isActive(href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={`group relative rounded-full px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                    active
+                      ? "text-[#C46A64]"
+                      : "text-[#6B5350] hover:text-[#3D2C2A]"
+                  }`}
+                >
+                  <span className="relative z-10">{label}</span>
 
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 scale-90 rounded-full bg-[#F5E6E1] opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100"
-                />
+                  {/* پس‌زمینه هاور / فعال */}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute inset-0 rounded-full transition-all duration-300 ${
+                      active
+                        ? "scale-100 bg-[#F5E6E1] opacity-100"
+                        : "scale-90 bg-[#F5E6E1] opacity-0 group-hover:scale-100 group-hover:opacity-100"
+                    }`}
+                  />
 
-                <span
-                  aria-hidden="true"
-                  className="absolute bottom-1.5 left-1/2 h-[2px] w-0 -translate-x-1/2 rounded-full bg-[#D9827C] transition-all duration-300 group-hover:w-6"
-                />
-              </a>
-            ))}
+                  {/* خط زیرین */}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute bottom-1.5 left-1/2 h-[2px] -translate-x-1/2 rounded-full bg-[#D9827C] transition-all duration-300 ${
+                      active ? "w-6" : "w-0 group-hover:w-6"
+                    }`}
+                  />
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="flex items-center gap-2.5">
@@ -301,17 +326,25 @@ export function Header({
               aria-label="ناوبری موبایل"
               className="flex flex-col gap-1 px-5 py-4"
             >
-              {NAV_ITEMS.map(([label, href]) => (
-                <a
-                  key={href}
-                  href={href}
-                  tabIndex={mobileOpen ? 0 : -1}
-                  onClick={() => setMobileOpen(false)}
-                  className="rounded-xl px-4 py-3 text-sm font-medium text-[#6B5350] transition-colors hover:bg-[#F5E6E1] hover:text-[#3D2C2A]"
-                >
-                  {label}
-                </a>
-              ))}
+              {NAV_ITEMS.map(([label, href]) => {
+                const active = isActive(href);
+                return (
+                  <a
+                    key={href}
+                    href={href}
+                    tabIndex={mobileOpen ? 0 : -1}
+                    aria-current={active ? "page" : undefined}
+                    onClick={() => setMobileOpen(false)}
+                    className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
+                      active
+                        ? "bg-[#F5E6E1] text-[#C46A64]"
+                        : "text-[#6B5350] hover:bg-[#F5E6E1] hover:text-[#3D2C2A]"
+                    }`}
+                  >
+                    {label}
+                  </a>
+                );
+              })}
 
               <div
                 onClick={() => {
